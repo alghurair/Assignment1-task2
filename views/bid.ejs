@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+
+            <div id="uploadfile" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">Place Bid</div>
+                         </div>  
+                    <div class="panel-body" >
+                        <form action="/bid/" id="EmployeeForm" class="form-horizontal" method="post"  role="form">
+                         <input type="hidden" name="id" value="<%= records._id %>">  
+                                
+                          <div id="signupalert" style="display:none" class="alert alert-danger">
+                            <p>Error:</p>
+                            <span></span>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label for="firstname" class="col-md-3 control-label">User Name</label>
+                          <div class="col-md-9">
+                              <input type="text" class="form-control" value="<%= records.user_name %>" name="uname" required>
+                          </div>
+                      </div>
+
+                        <div class="form-group">
+                            <label for="firstname" class="col-md-3 control-label">Amount</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" value="<%= records.amount %>" name="amt" required>
+                            </div>
+                        </div>
+                          
+
+                        <div class="form-group">
+                            <!-- Button -->                                        
+                            <div class="col-md-offset-3 col-md-9">
+                            <input type="submit" name="submit" value="submit" class="btn btn-primary">   
+                            </div>
+                        </div>
+                            
+                            
+                            
+                            
+                            
+                        </form>
+                     </div>
+                </div>
+    
+           
+           
+            
+     </div> 
+        </div>
+      </div>
+
+</html>

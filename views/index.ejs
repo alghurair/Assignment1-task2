@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body>
+  <a href="/product"><button type="button" style="margin-bottom: 10px;" class="btn btn-success btn-lg">Add Product
+      +</button></a>
+  <h2>In Stock</h2></br>
+  <div class="row">
+    <% records.forEach(function(row){%>
+      <input type="hidden" value="<%= row._id %>">
+    <% if(row.status == "in-progress"){%>
+    <div class="card col-md-3" style="width: 18rem;">
+      <img src="./uploads/<%= row.product_image %>" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><%= row.product_name %></h5>
+        <p class="card-text"><%= row.description %></p>
+        <a href="/bid/<%= row._id %>" class="btn btn-primary">Place Bid</a>
+      </div>
+    </div>
+    <% } %>
+    <% }) %>
+  </div>
+
+  <h2>Auctioned</h2></br>
+  <div class="row">
+    <% records.forEach(function(row){%>
+    <% if(row.status == "auctioned"){%>
+    <div class="card col-md-3" style="width: 18rem;">
+      <img src="./uploads/<%= row.product_image %>" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><%= row.product_name %></h5>
+        <p class="card-text"><%= row.description %></p>
+        <p id="#countdown"></p>
+      </div>
+
+        <div class="form-group">
+          <!-- Button -->                                        
+          <div class="col-md-offset-3 col-md-9" >
+            <input id="myBtn" type="submit" name="submit" value="Winner" label="student" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"/>
+          </div>
+      </div>
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Auction Winner is</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="/" id="EmployeeForm" class="form-horizontal" method="post" role="form">
+              <input type="hidden" name="id" value="<%= row._id %>">  
+            <div class="modal-body">
+            <h1><%= row.user_name %></h1>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <% } %>
+    <% }) %>
+  </div>
+
+  <h2>Completed</h2></br>
+  <div class="row">
+    <% records.forEach(function(row){%>
+    <% if(row.status == "completed"){%>
+    <div class="card col-md-3" style="width: 18rem;">
+      <img src="./uploads/<%= row.product_image %>" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><%= row.product_name %></h5>
+        <p class="card-text"><%= row.description %></p>
+        <p class="card-text">Auction Winner Is : <%= row.user_name %></p>
+      </div>
+    </div>
+    <% } %>
+    <% }) %>
+  </div>
+
+  <script>
+
+
+
+    const startingMinutes = 2;
+    let time = startingMinutes * 60;
+
+    const countdownEl = document.getElementById('#countdown');
+    document.getElementById("myBtn").disabled = true;
+
+    setInterval(updateCountdown, 1000);
+
+    function updateCountdown() {
+      const minutes = Math.floor(time / 60);
+      let seconds = time % 60;
+
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+
+      countdownEl.innerHTML = `${minutes}:${seconds}`;
+      time--;
+      time = time < 0 ? 0 : time;
+      localStorage.setItem('time',time)
+      console.log(time)
+
+      if(time == 0){
+        document.getElementById("#countdown").innerHTML = "";
+        document.getElementById("myBtn").disabled = false;
+      }
+    }
+
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>
